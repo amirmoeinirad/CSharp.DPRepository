@@ -1,9 +1,10 @@
 ﻿
 // Amir Moeini Rad
-// May 3, 2025
+// May, 2025
 
-// Main Concept: Repository Design Pattern
-// In this pattern, a repository class mediates between the domain and data mapping layers,
+// Main Concept: The Repository Design Pattern
+
+// In this pattern, a repository class mediates between the domain or business logic and data mapping layer,
 // acting like an in-memory collection of domain objects.
 // This pattern is useful for decoupling the business logic from data access logic,
 // making the code more maintainable and testable.
@@ -12,7 +13,7 @@
 namespace RepositoryDemo
 {
     // Entity class
-    // In a real application, this would be a model representing a database table.
+    // In a real application, this would be a model representing a database table called 'Product'.
     public class Product
     {
         // Mapping to the primary key column in the 'Product' table.
@@ -27,20 +28,20 @@ namespace RepositoryDemo
 
 
     // Generic repository interface
-    public interface IRepository<T>
+    public interface IRepository<TEntity>
     {
         // CRUD operations
 
-        // Create one item or record
-        void Add(T item);
+        // Create and add one item or record
+        void Add(TEntity item);
 
         // Read one item or record by ID
-        T GetById(int id);
+        TEntity GetById(int id);
 
         // Read all items or records
         // 'IEnumerable' is used to return a collection of in-memory items.
         // 'IQueryable' is used to return a collection of items from a database.
-        IEnumerable<T> GetAll();
+        IEnumerable<TEntity> GetAll();
 
         // Delete one item or record by ID
         void Remove(int id);
@@ -54,7 +55,7 @@ namespace RepositoryDemo
     // The repository class performs the CRUD operations (here in-memory list).
     // Therefore, the main app does not directly call the list.
     // The repo class acts as a mediator between the main app and the data source.
-    public class ProductRepository : IRepository<Product>
+    public class Repository : IRepository<Product>
     {
         // In-memory list to simulate a data source.
         private readonly List<Product> _products = new List<Product>();
@@ -90,13 +91,13 @@ namespace RepositoryDemo
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("------------------------------------");
-            Console.WriteLine("Repository Design Pattern in C#.NET.");
-            Console.WriteLine("------------------------------------\n");
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("The Repository Design Pattern in C#.NET.");
+            Console.WriteLine("----------------------------------------\n");
 
 
             // Create a repository instance
-            IRepository<Product> productRepo = new ProductRepository();
+            Repository productRepo = new();
 
             // Add products
             productRepo.Add(new Product { Id = 1, Name = "Laptop" });
