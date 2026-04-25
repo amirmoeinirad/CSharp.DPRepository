@@ -4,10 +4,8 @@
 
 // Main Concept: The Repository Design Pattern
 
-// In this pattern, a repository class mediates between the domain or business logic and data mapping layer,
-// acting like an in-memory collection of domain objects.
-// This pattern is useful for decoupling the business logic from data access logic,
-// making the code more maintainable and testable.
+// In this pattern, a repository class mediates between the business logic and data mapping layers.
+// This pattern is useful for decoupling the business logic from data access logic.
 
 
 namespace RepositoryDemo
@@ -29,9 +27,7 @@ namespace RepositoryDemo
 
     // Generic repository interface
     public interface IRepository<TEntity>
-    {
-        // CRUD operations
-
+    {        
         // Create and add one item or record
         void Add(TEntity item);
 
@@ -51,27 +47,23 @@ namespace RepositoryDemo
     //////////////////////////////////////
     
 
-    // Product repository implementation (in-memory)
-    // The repository class performs the CRUD operations (here in-memory list).
-    // Therefore, the main app does not directly call the list.
+    // Product repository implementation (in-memory)        
     // The repo class acts as a mediator between the main app and the data source.
     public class Repository : IRepository<Product>
     {
         // In-memory list to simulate a data source.
-        private readonly List<Product> _products = new List<Product>();
+        private readonly List<Product> _products = [];        
 
-        // CRUD operations implementation
-
-        // Adding a product to the in-memory list using the lambda expression syntax.
+        // Adding a product to the in-memory list.
         public void Add(Product product) => _products.Add(product);
 
-        // Using lambda expression and LINQ syntax to find the product by ID.
+        // Using a lamda expression to find a product by ID.
         public Product GetById(int id) => _products.First(p => p.Id == id);
 
-        // Returning all products from the in-memory list using the lambda expression syntax.
+        // Returning all products from the in-memory list.
         public IEnumerable<Product> GetAll() => _products;
 
-        // Removing a product by ID using the traditional method syntax.
+        // Removing a product by ID.
         public void Remove(int id)
         {
             var product = GetById(id);
